@@ -1,12 +1,12 @@
-class Book {
-    constructor(name, genre){
+class Library {
+    constructor(name, book){
         this.name = name;
-        this.genre = genre;
+        this.book = book;
         
     }
 
     describe(){
-        return '${this.name} is from ${this.genre}.';
+        return '${this.name} is from ${this.book}.';
     }
 }
 
@@ -16,11 +16,11 @@ class Manga{
         this.genre = [];
     }
 
-    addBook(Book){
-        if(Book instanceof Book){
-            this.Book.push(Book);
+    addToLibrary(library){
+        if(library instanceof Library){
+            this.genre.push(library);
         } else {
-            throw new error ('Not a type of Manga. Please make sure you have the right book. ');
+            throw new error ('Not a type of book. Please make sure you have the right book. ');
         }
     }
 
@@ -30,23 +30,23 @@ class Manga{
 }
 
 class ShoppingCart {
-    constructor(){
+    constructor() {
         this.mangas = [];
         this.selectedManga = null;
     }
 
     start() {
-        let selection = this.showShoppingCartOptions();
-        while (selection != 0) {
-            switch (selection) {
+    let selection = this.showShoppingCartOptions();
+    while (selection != 0) {
+            switch (selection)  {
                 case "1":
-                this.addBookToShoppingCart();
+                this.addToLibrary();
                 break;
                 case "2":
-                    this.seeShoppingCart()
+                    this.DisplayShoppingCart();
                     break;
                 case "3":
-                    this.removeBook();
+                    this.removeManga();
                     break;
                 case "4":
                     this.confirmShoppingCart();
@@ -60,64 +60,64 @@ class ShoppingCart {
     }
 
     showShoppingCartOptions() {
-        return prompt(' 0) exit 1) Add book 2) see shopping cart 3) Remove book 4) Confirm Shopping Cart');
+        return prompt(' 0) exit 1) Add book 2) Display Shopping Cart 3) Remove book 4) Confirm Shopping Cart');
     }
 
-    showShoppingCartOptions(Mangainfo){
-        return prompt(' 0) back 1) add book 2) remove book 3) confirm shopping cart ');
-    
-    }
+    showShoppingCartOptions(MangaInfo) {
+        return prompt(' 0) back 1) Add Book 2) Display Shopping Cart  3) Remove book 4) Confirm Shopping Cart');
 
-    displayShoppingCart() {
+    }
+    DisplayShoppingCart() {
         let mangaString = '';
         for (let i = 0; i < this.mangas.length; i++) {
             mangaString += i + ') ' + this.mangas[i].name + '\n';
         }
-        alert(mangaString);
+        alert(mangaString)
     }
 
-    addBook() {
-        let name = prompt ('Name of new book you wanna add');
-        this.book.push(new Book(name));
+    addToLibrary() {
+        let name = prompt ('Name of new book you wanna add:');
+        this.mangas.push(new Manga(name));
     }
-viewShoppingCart(){
-    let index = prompt('Enter the number of book you wish to see.');
+    confirmShoppingCart(){
+    let index = prompt('Enter the name of book you wish to see:');
     if (index > -1 && index < this.mangas.length) {
         this.selectedManga = this.mangas[index];
         let description = "Book Name: " + this.selectedManga.name + '\n';
 
-        for (let i = 0; i < this.selectedManga.book.length; i++){
-            description += i + ') ' + this.selectedManga.book[i].genre + ' - ' + this.selectedManga.book[i].genre + '\n'; 
+        for (let i = 0; i < this.selectedManga.genre.length; i++){
+        this.genre = [];
+            description += i + ') ' + this.selectedManga.genre[i].name + ' - ' + this.selectedManga.genre[i].book + '\n'; 
         }
 
         let selection = this.showShoppingCartOptions(description);
         switch (selection) {
             case '1':
-                this.addBook();
+                this.addToLibrary();
                 break;
                 case '2':
-                    this.removeBook();
+                    this.removeLibrary();
         }
     }
 }
 
-deleteBook() {
-    let index = prompt("Enter the number of book you wish to delete");
-    if (index > -1 && index < this.mangas.length){
+removeManga(){
+    let index = prompt('Enter the index of the book you want to remove:');
+    if ( index > -1 && index < this.mangas.length){
         this.mangas.splice(index, 1);
+
     }
-
+}
+createLibrary(){
+    let name = prompt("Enter name of book you wanna add:")
+    let book = prompt("Enter genre of book")
+    this.selectedManga.genre.push(new Library(name, book));
 }
 
-addBook(){
-    let name = prompt("Enter name of book you wanna add.")
-    let genre = prompt("Enter genre of book")
-}
-
-removeBook(){
-    let index = prompt("Enter the number of book you wish to remove.")
-    if(index > -1 && index < this.selectedManga.book.length){
-        this.selectedManga.book.splice(index, 1);
+deleteLibrary(){
+    let index = prompt('Enter index of book you wish to remove:');
+    if (index > -1 && index < this.selectedManga.genre.length) {
+        this.selectedManga.genre.splice(index, 1);
     }
 }
 }
